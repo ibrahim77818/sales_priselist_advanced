@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Bulk view of all pricelist rules: review, mass-edit, export and import.
+        Odoo 18 has a single pricelist mode: every rule field is available to
+        pricelist users; detailed formula columns are optional (hidden by default).
+    -->
+    <record id="asp_pricelist_item_tree_view_bulk" model="ir.ui.view">
+        <field name="name">product.pricelist.item.list.asp.bulk</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="Pricelist Rules" editable="bottom" multi_edit="1">
+                <field name="company_id" column_invisible="True"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="asp_target" column_invisible="True"/>
+                <field name="asp_allowed_uom_ids" column_invisible="True"/>
+                <field name="asp_allowed_packaging_ids" column_invisible="True"/>
+                <field name="pricelist_id" options="{'no_create': True}"/>
+                <field name="applied_on"/>
+                <field name="categ_id" optional="show"
+                       options="{'no_create': True}"
+                       readonly="applied_on != '2_product_category'" required="applied_on == '2_product_category'"/>
+                <field name="product_tmpl_id" options="{'no_create': True}"
+                       required="applied_on == '1_product'"/>
+                <field name="product_id" groups="product.group_product_variant" optional="show"
+                       options="{'no_create': True}"
+                       domain="[('product_tmpl_id', '=?', product_tmpl_id)]"
+                       required="applied_on == '0_product_variant'"/>
+                <field name="uom_id" groups="uom.group_uom" optional="show"
+                       options="{'no_create': True, 'no_open': True}"
+                       domain="[('id', 'in', asp_allowed_uom_ids)]"
+                       readonly="asp_target == '0_packaging'"/>
+                <field name="packaging_id" groups="product.group_stock_packaging" optional="show"
+                       options="{'no_create': True, 'no_open': True}"
+                       domain="[('id', 'in', asp_allowed_packaging_ids)]"
+                       readonly="asp_target == '1_uom'"/>
+                <field name="min_quantity"/>
+                <field name="compute_price"/>
+                <field name="fixed_price" widget="monetary" options="{'field_digits': True}"
+                       invisible="compute_price != 'fixed'"/>
+                <field name="percent_price" optional="hide"
+                       invisible="compute_price != 'percentage'"/>
+                <field name="base" optional="hide"
+                       invisible="compute_price != 'formula'"/>
+                <field name="base_pricelist_id" optional="hide"
+                       options="{'no_create': True}"
+                       invisible="compute_price == 'fixed' or (compute_price == 'formula' and base != 'pricelist')"
+                       required="compute_price == 'formula' and base == 'pricelist'"/>
+                <field name="price_discount" optional="hide"
+                       invisible="compute_price != 'formula' or base == 'standard_price'"/>
+                <field name="price_markup" optional="hide"
+                       invisible="compute_price != 'formula' or base != 'standard_price'"/>
+                <field name="price_round" optional="hide"
+                       invisible="compute_price != 'formula'"/>
+                <field name="price_surcharge" optional="hide"
+                       invisible="compute_price != 'formula'"/>
+                <field name="price_surcharge_percent" optional="hide"
+                       invisible="compute_price != 'formula'"/>
+                <field name="price_surcharge_percent_base" optional="hide"
+                       invisible="compute_price != 'formula' or price_surcharge_percent == 0"/>
+                <field name="price_min_margin" optional="hide"
+                       invisible="compute_price != 'formula'"/>
+                <field name="price_max_margin" optional="hide"
+                       invisible="compute_price != 'formula'"/>
+                <field name="price" string="Rule" optional="show"/>
+                <field name="date_start" optional="show"/>
+                <field name="date_end" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="asp_pricelist_item_action" model="ir.actions.act_window">
+        <field name="name">Pricelist Rules</field>
+        <field name="res_model">product.pricelist.item</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="asp_pricelist_item_tree_view_bulk"/>
+        <field name="search_view_id" ref="product.product_pricelist_item_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a pricelist rule</p>
+            <p>
+                Review and edit the rules of all your pricelists in one place, or load them in bulk
+                with the Excel templates available in the gear menu (&#9881;) &gt; Import records.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="asp_menu_pricelist_items"
+              name="Pricelist Rules"
+              parent="sale.product_menu_catalog"
+              action="asp_pricelist_item_action"
+              groups="product.group_product_pricelist"
+              sequence="31"/>
+
+</odoo>
