@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Rule form (Odoo 19 layout). Packagings are units in Odoo 19: one field covers both. -->
+    <record id="product_pricelist_item_form_view_inherit_asp" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.asp</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='pricelist_rule_method']/field[@name='product_id']" position="after">
+                <field name="asp_target" invisible="1"/>
+                <field name="asp_allowed_uom_ids" invisible="1"/>
+                <field name="uom_id"
+                       groups="uom.group_uom"
+                       options="{'no_create': True}"
+                       domain="[('id', 'in', asp_allowed_uom_ids)]"
+                       placeholder="Any unit"/>
+            </xpath>
+            <!-- "per <unit>" next to the fixed price: the rule unit when there is one -->
+            <xpath expr="//field[@name='fixed_price']/../span[field[@name='product_uom_name']]" position="attributes">
+                <attribute name="invisible">not product_uom_name or uom_id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='fixed_price']" position="after">
+                <span class="d-flex gap-2 p-0" invisible="not uom_id">per<field name="asp_uom_name"/></span>
+            </xpath>
+            <xpath expr="//group[@name='pricelist_rule_base']//field[@name='price_surcharge']" position="after">
+                <label for="price_surcharge_percent" string="Extra Fee (%)"
+                       invisible="compute_price != 'formula'"/>
+                <div class="o_row" invisible="compute_price != 'formula'">
+                    <field name="price_surcharge_percent" class="oe_inline"/>
+                    <span>% on the</span>
+                    <field name="price_surcharge_percent_base" class="oe_inline"
+                           readonly="price_surcharge_percent == 0"/>
+                </div>
+            </xpath>
+            <xpath expr="//group[@name='pricelist_rule_computation']" position="after">
+                <div class="alert alert-warning mb-3" role="status"
+                     invisible="asp_target != '1_uom'">
+                    This rule applies only when the product is sold in this unit or packaging. Fixed price, extra fee, margins and minimum quantity are expressed in that unit (per package for a packaging).
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Rule list -->
+    <record id="product_pricelist_item_tree_view_inherit_asp" model="ir.ui.view">
+        <field name="name">product.pricelist.item.list.asp</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="min_quantity" position="after">
+                <field name="uom_id" groups="uom.group_uom" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Rules edited from a product / variant (smart button "Extra Prices") -->
+    <record id="product_pricelist_item_tree_view_from_product_inherit_asp" model="ir.ui.view">
+        <field name="name">product.pricelist.item.list.from.product.asp</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_tree_view_from_product"/>
+        <field name="arch" type="xml">
+            <field name="min_quantity" position="before">
+                <field name="asp_allowed_uom_ids" column_invisible="True"/>
+                <field name="uom_id"
+                       groups="uom.group_uom"
+                       optional="show"
+                       options="{'no_create': True, 'no_open': True}"
+                       domain="[('id', 'in', asp_allowed_uom_ids)]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_pricelist_item_view_search_inherit_asp" model="ir.ui.view">
+        <field name="name">product.pricelist.item.search.asp</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter name="asp_filter_uom" string="Unit / Packaging Rules"
+                        domain="[('asp_target', '=', '1_uom')]" groups="uom.group_uom"/>
+                <field name="uom_id" groups="uom.group_uom"/>
+                <group>
+                    <filter name="asp_groupby_uom" string="Unit / Packaging" context="{'group_by': 'uom_id'}"
+                            groups="uom.group_uom"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

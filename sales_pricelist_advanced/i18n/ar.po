@@ -1,0 +1,372 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sales_pricelist_advanced
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-04 16:48+0000\n"
+"PO-Revision-Date: 2026-11-04 16:49+0000\n"
+"Last-Translator: Ibrahim Yahia\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid ""
+"%(base)s with a %(discount)s %% %(discount_type)s, %(surcharge)s extra fee and %(fee)s %% extra fee on the %(basis)s\n"
+"Example: %(amount)s → %(total)s"
+msgstr ""
+"%(base)s مع %(discount_type)s %(discount)s %% ورسوم إضافية %(surcharge)s ورسوم إضافية %(fee)s %% على %(basis)s\n"
+"مثال: %(amount)s ← %(total)s"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid "%(name)s (%(unit)s)"
+msgstr "%(name)s (%(unit)s)"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid "%(price)s and %(fee)s %% extra fee on the %(basis)s"
+msgstr "%(price)s ورسوم إضافية %(fee)s %% على %(basis)s"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid "%(price)s per %(unit)s"
+msgstr "%(price)s لكل %(unit)s"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/sale_order_line.py:0
+msgid ""
+"%(qty)s %(old_uom)s = %(exact)s %(new_uom)s: rounded up to %(new_qty)s "
+"%(new_uom)s to sell whole packages."
+msgstr ""
+"%(qty)s %(old_uom)s = %(exact)s %(new_uom)s: تم التقريب للأعلى إلى "
+"%(new_qty)s %(new_uom)s لبيع عبوات كاملة."
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/sale_order_line.py:0
+msgid ""
+"%(qty)s %(old_uom)s converted to %(new_qty)s %(new_uom)s (rounded to the "
+"precision of the unit of measure)."
+msgstr ""
+"تم تحويل %(qty)s %(old_uom)s إلى %(new_qty)s %(new_uom)s (مع التقريب حسب دقة"
+" وحدة القياس)."
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.product_pricelist_item_form_view_inherit_asp
+msgid "<span>% on the</span>"
+msgstr "<span>% على</span>"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__asp_allowed_uom_ids
+msgid "Allowed Units"
+msgstr "الوحدات المسموح بها"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_product_pricelist_item__price_surcharge_percent_base
+msgid ""
+"Amount the percentage extra fee is computed on:\n"
+"Base Price: the price the rule is based on (sales price, cost or other pricelist).\n"
+"Discounted Price: the price after the rule discount and rounding."
+msgstr ""
+"المبلغ الذي تُحتسب عليه نسبة الرسوم الإضافية:\n"
+"السعر الأساسي: السعر الذي تستند إليه القاعدة (سعر البيع، التكلفة أو قائمة أسعار أخرى).\n"
+"السعر بعد الخصم: السعر بعد خصم القاعدة والتقريب."
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields.selection,name:sales_pricelist_advanced.selection__product_pricelist_item__asp_target__2_any
+msgid "Any Unit"
+msgstr "أي وحدة"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.product_pricelist_item_form_view_inherit_asp
+msgid "Any unit"
+msgstr "أي وحدة"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_product_pricelist_item__uom_id
+msgid ""
+"Apply this rule only when the product is sold in this unit or packaging.\n"
+"Fixed price, extra fee and margins are then expressed per this unit / package, and the minimum quantity is counted in this unit / in packages."
+msgstr ""
+"تطبيق هذه القاعدة فقط عند بيع المنتج بهذه الوحدة أو التعبئة.\n"
+"يُعبَّر حينها عن السعر الثابت والرسوم الإضافية والهوامش لكل وحدة / عبوة، وتُحسب الكمية الدنيا بهذه الوحدة / بعدد العبوات."
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields.selection,name:sales_pricelist_advanced.selection__product_pricelist_item__price_surcharge_percent_base__base
+msgid "Base Price"
+msgstr "السعر الأساسي"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid "Base price, extra fee and margins are computed per %s."
+msgstr "يتم احتساب السعر الأساسي والرسوم الإضافية والهوامش لكل %s."
+
+#. module: sales_pricelist_advanced
+#: model:ir.model,name:sales_pricelist_advanced.model_res_company
+msgid "Companies"
+msgstr "الشركات"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model,name:sales_pricelist_advanced.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.res_config_settings_view_form_inherit_asp
+msgid ""
+"Convert the line quantity when its unit or packaging changes (24 Units "
+"become 2 Dozens or 1 Carton of 24)"
+msgstr ""
+"تحويل كمية البند عند تغيير وحدته أو تعبئته (24 وحدة تصبح 2 دزينة أو كرتون "
+"واحد من 24)"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.actions.act_window,help:sales_pricelist_advanced.asp_pricelist_item_action
+msgid "Create a pricelist rule"
+msgstr "أنشئ قاعدة قائمة أسعار"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields.selection,name:sales_pricelist_advanced.selection__product_pricelist_item__price_surcharge_percent_base__discounted
+msgid "Discounted Price"
+msgstr "السعر بعد الخصم"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist__display_name
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__display_name
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_company__display_name
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__price_surcharge_percent
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.product_pricelist_item_form_view_inherit_asp
+msgid "Extra Fee (%)"
+msgstr "رسوم إضافية (%)"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__price_surcharge_percent_base
+msgid "Extra Fee (%) On"
+msgstr "الرسوم الإضافية (%) على"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_product_pricelist_item__price_surcharge_percent
+msgid ""
+"Extra fee expressed as a percentage, added after the discount and rounding (like the fixed extra fee) and before the margins are applied.\n"
+"Use a negative value for a percentage rebate."
+msgstr ""
+"رسوم إضافية كنسبة مئوية، تُضاف بعد الخصم والتقريب (مثل الرسوم الإضافية الثابتة) وقبل تطبيق الهوامش.\n"
+"استخدم قيمة سالبة لخصم بنسبة مئوية."
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist__id
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__id
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_company__id
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_sale_order_line__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_company__asp_convert_qty_on_uom_change
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_config_settings__asp_convert_qty_on_uom_change
+msgid "Keep Quantity on UoM Change"
+msgstr "الحفاظ على الكمية عند تغيير وحدة القياس"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model,name:sales_pricelist_advanced.model_product_pricelist
+msgid "Pricelist"
+msgstr "قائمة الأسعار"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model,name:sales_pricelist_advanced.model_product_pricelist_item
+msgid "Pricelist Rule"
+msgstr "قاعدة قائمة الأسعار"
+
+#. module: sales_pricelist_advanced
+#: model:ir.actions.act_window,name:sales_pricelist_advanced.asp_pricelist_item_action
+#: model:ir.ui.menu,name:sales_pricelist_advanced.asp_menu_pricelist_items
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "Pricelist Rules"
+msgstr "قواعد قوائم الأسعار"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid ""
+"Pricelist rule \"%(rule)s\": the unit \"%(uom)s\" cannot be converted into "
+"the product unit \"%(product_uom)s\"."
+msgstr ""
+"قاعدة قائمة الأسعار \"%(rule)s\": لا يمكن تحويل الوحدة \"%(uom)s\" إلى وحدة "
+"المنتج \"%(product_uom)s\"."
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid "Pricelist rules - All rule types (discounts, formulas)"
+msgstr "قواعد قوائم الأسعار - جميع أنواع القواعد (خصومات، معادلات)"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid "Pricelist rules - Fixed prices (product, unit, packaging)"
+msgstr "قواعد قوائم الأسعار - أسعار ثابتة (منتج، وحدة، تعبئة)"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist.py:0
+msgid "Pricelists with rules - All rule types (discounts, formulas)"
+msgstr "قوائم الأسعار مع القواعد - جميع أنواع القواعد (خصومات، معادلات)"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist.py:0
+msgid "Pricelists with rules - Fixed prices (product, unit, packaging)"
+msgstr "قوائم الأسعار مع القواعد - أسعار ثابتة (منتج، وحدة، تعبئة)"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_sale_order_line__asp_qty_product_id
+msgid "Quantity Product (technical)"
+msgstr "منتج الكمية (تقني)"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_sale_order_line__asp_qty_uom_id
+msgid "Quantity Unit (technical)"
+msgstr "وحدة الكمية (تقني)"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/sale_order_line.py:0
+msgid "Quantity adjusted"
+msgstr "تم تعديل الكمية"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/sale_order_line.py:0
+msgid "Quantity rounded"
+msgstr "تم تقريب الكمية"
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/sale_order_line.py:0
+msgid "Quantity rounded up to %(qty)s %(uom)s to sell whole packages."
+msgstr "تم تقريب الكمية للأعلى إلى %(qty)s %(uom)s لبيع عبوات كاملة."
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.actions.act_window,help:sales_pricelist_advanced.asp_pricelist_item_action
+msgid ""
+"Review and edit the rules of all your pricelists in one place, or load them in bulk\n"
+"                with the Excel templates available in the gear menu (⚙) &gt; Import records."
+msgstr ""
+"راجع وعدّل قواعد جميع قوائم الأسعار في مكان واحد، أو حمّلها دفعة واحدة\n"
+"                باستخدام نماذج Excel المتوفرة في قائمة الترس (⚙) &gt; استيراد السجلات."
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_company__asp_round_qty_to_packaging
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_config_settings__asp_round_qty_to_packaging
+msgid "Round Up to Whole Packages"
+msgstr "التقريب إلى عبوات كاملة"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.res_config_settings_view_form_inherit_asp
+msgid ""
+"Round the line quantity up to whole packages when a line is sold in a "
+"packaging"
+msgstr "تقريب كمية البند للأعلى إلى عبوات كاملة عند البيع بتعبئة"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "Rule"
+msgstr "القاعدة"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__asp_uom_name
+msgid "Rule Unit Name"
+msgstr "اسم وحدة القاعدة"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model,name:sales_pricelist_advanced.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "بند أمر البيع"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__asp_target
+msgid "Sold As"
+msgstr "يُباع كـ"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_product_pricelist_item__asp_target
+msgid ""
+"Technical field used to give unit / packaging rules priority over generic "
+"ones."
+msgstr ""
+"حقل تقني يُستخدم لإعطاء قواعد الوحدة / التعبئة أولوية على القواعد العامة."
+
+#. module: sales_pricelist_advanced
+#. odoo-python
+#: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
+msgid "The minimum margin should be lower than the maximum margin."
+msgstr "يجب أن يكون الحد الأدنى للهامش أقل من الحد الأقصى."
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.product_pricelist_item_form_view_inherit_asp
+msgid ""
+"This rule applies only when the product is sold in this unit or packaging. "
+"Fixed price, extra fee, margins and minimum quantity are expressed in that "
+"unit (per package for a packaging)."
+msgstr ""
+"تُطبَّق هذه القاعدة فقط عند بيع المنتج بهذه الوحدة أو التعبئة. يُعبَّر عن "
+"السعر الثابت والرسوم الإضافية والهوامش والكمية الدنيا بتلك الوحدة (لكل عبوة "
+"في حالة التعبئة)."
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__uom_id
+#: model:ir.model.fields.selection,name:sales_pricelist_advanced.selection__product_pricelist_item__asp_target__1_uom
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.product_pricelist_item_view_search_inherit_asp
+msgid "Unit / Packaging"
+msgstr "الوحدة / التعبئة"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.product_pricelist_item_view_search_inherit_asp
+msgid "Unit / Packaging Rules"
+msgstr "قواعد الوحدة / التعبئة"
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_res_company__asp_round_qty_to_packaging
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_res_config_settings__asp_round_qty_to_packaging
+msgid ""
+"When a sales order line is sold in a packaging (e.g. Carton of 24), round "
+"its quantity up to a whole number of packages."
+msgstr ""
+"عند بيع بند أمر البيع بتعبئة (مثل Carton of 24)، تقريب كميته للأعلى إلى عدد "
+"صحيح من العبوات."
+
+#. module: sales_pricelist_advanced
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_res_company__asp_convert_qty_on_uom_change
+#: model:ir.model.fields,help:sales_pricelist_advanced.field_res_config_settings__asp_convert_qty_on_uom_change
+msgid ""
+"When the unit or packaging of a sales order line is changed, convert the "
+"quantity so that the physical quantity stays the same (e.g. 24 Units become "
+"2 Dozens or 1 Carton of 24)."
+msgstr ""
+"عند تغيير وحدة أو تعبئة بند أمر البيع، يتم تحويل الكمية بحيث تبقى الكمية "
+"الفعلية نفسها (مثلاً 24 وحدة تصبح 2 دزينة أو كرتون واحد من 24)."
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.product_pricelist_item_form_view_inherit_asp
+msgid "per"
+msgstr "لكل"

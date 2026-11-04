@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_inherit_asp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.asp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='pricelist_configuration']" position="after">
+                <setting id="asp_convert_qty_on_uom_change"
+                         groups="uom.group_uom"
+                         help="Convert the line quantity when its unit or packaging changes (24 Units become 2 Dozens or 1 Carton of 24)">
+                    <field name="asp_convert_qty_on_uom_change"/>
+                </setting>
+                <setting id="asp_round_qty_to_packaging"
+                         groups="uom.group_uom"
+                         help="Round the line quantity up to whole packages when a line is sold in a packaging">
+                    <field name="asp_round_qty_to_packaging"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

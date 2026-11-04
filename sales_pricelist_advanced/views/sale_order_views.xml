@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Odoo 19: packagings are units, so the order line unit is the packaging and the
+         unit price is already a price per package. Only the conversion trackers are needed. -->
+    <record id="view_order_form_inherit_asp" model="ir.ui.view">
+        <field name="name">sale.order.form.asp</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Packaging names ("Carton of 24") are longer than unit names -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_id']" position="attributes">
+                <attribute name="width">120px</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_id']" position="after">
+                <field name="asp_qty_uom_id" column_invisible="True" force_save="1"/>
+                <field name="asp_qty_product_id" column_invisible="True" force_save="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_uom_id']" position="after">
+                <field name="asp_qty_uom_id" invisible="1" force_save="1"/>
+                <field name="asp_qty_product_id" invisible="1" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
