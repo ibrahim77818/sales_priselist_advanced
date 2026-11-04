@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_pricelist_view_inherit_asp" model="ir.ui.view">
+        <field name="name">product.pricelist.form.asp</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <!-- Basic mode ("Multiple prices per product"): editable list -->
+            <xpath expr="//field[@name='item_ids']/tree[@editable='bottom']/field[@name='min_quantity']" position="before">
+                <field name="asp_target" column_invisible="True"/>
+                <field name="asp_allowed_uom_ids" column_invisible="True"/>
+                <field name="asp_allowed_packaging_ids" column_invisible="True"/>
+                <field name="uom_id"
+                       groups="uom.group_uom"
+                       optional="show"
+                       options="{'no_create': True, 'no_open': True}"
+                       domain="[('id', 'in', asp_allowed_uom_ids)]"
+                       readonly="asp_target == '0_packaging'"/>
+                <field name="packaging_id"
+                       groups="product.group_stock_packaging"
+                       optional="show"
+                       options="{'no_create': True, 'no_open': True}"
+                       domain="[('id', 'in', asp_allowed_packaging_ids)]"
+                       readonly="asp_target == '1_uom' or not product_tmpl_id"/>
+            </xpath>
+            <!-- Advanced mode: read-only list opening the rule form -->
+            <xpath expr="//field[@name='item_ids']/tree[@groups='product.group_sale_pricelist']/field[@name='min_quantity']" position="after">
+                <field name="uom_id" groups="uom.group_uom" optional="show"/>
+                <field name="packaging_id" groups="product.group_stock_packaging" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

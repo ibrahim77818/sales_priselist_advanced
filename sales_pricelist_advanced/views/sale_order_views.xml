@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_inherit_asp" model="ir.ui.view">
+        <field name="name">sale.order.form.asp</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Order lines: editable list -->
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_packaging_id']" position="after">
+                <field name="asp_qty_uom_id" column_invisible="True" force_save="1"/>
+                <field name="asp_qty_product_id" column_invisible="True" force_save="1"/>
+                <field name="asp_package_price"
+                       groups="product.group_stock_packaging"
+                       optional="hide"
+                       invisible="not product_packaging_id"/>
+            </xpath>
+            <!-- Order lines: form (mobile / "open line") -->
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_packaging_id']" position="after">
+                <field name="asp_qty_uom_id" invisible="1" force_save="1"/>
+                <field name="asp_qty_product_id" invisible="1" force_save="1"/>
+                <field name="asp_package_price"
+                       groups="product.group_stock_packaging"
+                       invisible="not product_packaging_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
