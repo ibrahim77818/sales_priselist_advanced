@@ -36,11 +36,16 @@ class SaleOrderLine(models.Model):
         # Odoo 19 moved NewId out of odoo.models: a stored record has an integer id.
         return not isinstance(self.id, int)
 
+    def _asp_qty_rounding(self):
+        """Odoo 20 removed uom.rounding: every unit uses the 'Product Unit' precision."""
+        return 10 ** -self.env['decimal.precision'].precision_get('Product Unit')
+
     def _asp_is_packaging_uom(self, uom=None):
-        """Odoo 19: a packaging is a unit listed in the product's Packagings (uom_ids)."""
+        """Odoo 19+: a packaging is a unit listed in the product's Packagings
+        (uom_ids, plus the variant-specific packagings of Odoo 20)."""
         self.ensure_one()
         uom = uom or self.product_uom_id
-        return bool(uom) and uom in self.product_id.uom_ids
+        return bool(uom) and uom in (self.product_id.uom_ids | self.product_id.extra_uom_ids)
 
     def _asp_whole_packages(self, qty, uom):
         """Quantity rounded up to whole packages when ``uom`` is a packaging of the
@@ -78,13 +83,13 @@ class SaleOrderLine(models.Model):
             or prev_product != self.product_id
             or uom_root(prev_uom) != uom_root(new_uom)
             or self.qty_delivered or self.qty_invoiced
-            or float_is_zero(qty, precision_rounding=prev_uom.rounding)
+            or float_is_zero(qty, precision_rounding=self._asp_qty_rounding())
         ):
             return None
         exact_qty = prev_uom._compute_quantity(qty, new_uom, round=False)
         new_qty = self._asp_whole_packages(exact_qty, new_uom)
-        new_qty = float_round(new_qty, precision_rounding=new_uom.rounding, rounding_method='HALF-UP')
-        if float_is_zero(new_qty, precision_rounding=new_uom.rounding):
+        new_qty = float_round(new_qty, precision_rounding=self._asp_qty_rounding(), rounding_method='HALF-UP')
+        if float_is_zero(new_qty, precision_rounding=self._asp_qty_rounding()):
             # Converting would wipe the quantity (e.g. 0.04 Unit -> Dozens): keep it.
             return None
         return prev_uom, exact_qty, new_qty
@@ -142,7 +147,7 @@ class SaleOrderLine(models.Model):
             return None
         qty = self.product_uom_qty or 0.0
         new_qty = self._asp_whole_packages(qty, self.product_uom_id)
-        if float_compare(new_qty, qty, precision_rounding=self.product_uom_id.rounding) <= 0:
+        if float_compare(new_qty, qty, precision_rounding=self._asp_qty_rounding()) <= 0:
             return None
         self.product_uom_qty = new_qty
         return {

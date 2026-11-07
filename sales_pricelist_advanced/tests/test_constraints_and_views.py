@@ -46,12 +46,11 @@ class TestConstraints(AspCommon):
 
 @tagged('post_install', '-at_install', 'asp')
 class TestPricelistModesUI(AspCommon):
-    """Create rules through the real Odoo 18 views (pricelist form -> rule form)."""
+    """Create rules through the real Odoo 20 views (pricelist form -> rule form)."""
 
     def test_rule_form_product_rules(self):
         form = Form(self.pricelist)
         with form.item_ids.new() as item:
-            item.display_applied_on = '1_product'
             item.product_tmpl_id = self.tmpl
             item.uom_id = self.carton
             item.fixed_price = 216.0
@@ -79,15 +78,14 @@ class TestPricelistModesUI(AspCommon):
         with form.item_ids.new() as item:
             item.product_tmpl_id = self.tmpl
             item.uom_id = self.carton
-            item.compute_price = 'formula'
+            item.compute_price = 'discount'
             item.price_discount = 10
         with form.item_ids.new() as item:
             # no product nor category: global rule
             item.uom_id = self.uom_dozen
-            item.compute_price = 'percentage'
-            item.percent_price = 5
+            item.compute_price = 'discount'
+            item.price_discount = 5
         with form.item_ids.new() as item:
-            item.display_applied_on = '2_product_category'
             item.categ_id = self.categ_food
             item.uom_id = self.uom_dozen
             item.fixed_price = 40.0
@@ -101,12 +99,12 @@ class TestPricelistModesUI(AspCommon):
         self.assertAlmostEqual(self._line(order, product=self.egg_tray, qty=1).price_unit, 40.0, places=6)
 
     def test_rule_form_cost_markup_with_percent_fee(self):
-        """The 'cost + markup + % fee' set-up (Odoo 18 shows a Markup field for cost-based rules)."""
+        """The 'cost + surcharge + % fee' set-up (Odoo 20 rule type "Surcharge" on the cost)."""
         form = Form(self.pricelist)
         with form.item_ids.new() as item:
             item.product_tmpl_id = self.tmpl
             item.uom_id = self.pack_6
-            item.compute_price = 'formula'
+            item.compute_price = 'markup'
             item.base = 'standard_price'
             item.price_markup = 50
             item.price_surcharge_percent = 10
@@ -130,7 +128,7 @@ class TestPricelistModesUI(AspCommon):
         with form.item_ids.new() as item:
             item.product_tmpl_id = self.tmpl
             item.uom_id = self.carton
-            item.display_applied_on = '2_product_category'
+            item.product_tmpl_id = self.env['product.template']  # Odoo 20: clear the product first
             item.categ_id = self.categ_drinks
             item.uom_id = self.carton  # any unit can be chosen on a category rule
             item.fixed_price = 1.0
@@ -151,10 +149,10 @@ class TestPricelistModesUI(AspCommon):
 class TestMarginConstraint(AspCommon):
 
     def test_min_margin_alone_is_allowed(self):
-        rule = self._product_item(compute_price='formula', price_discount=50, price_min_margin=1.0)
+        rule = self._product_item(compute_price='discount', price_discount=50, price_min_margin=1.0)
         self.assertAlmostEqual(self._price(self.pricelist, self.product, 1), 11.0)
         self.assertTrue(rule)
 
     def test_min_above_max_still_rejected(self):
         with self.assertRaises(ValidationError):
-            self._product_item(compute_price='formula', price_min_margin=5.0, price_max_margin=2.0)
+            self._product_item(compute_price='discount', price_min_margin=5.0, price_max_margin=2.0)

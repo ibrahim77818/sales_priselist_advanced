@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 from odoo import _, api, fields, models, tools
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
-
-# Context keys set by the pricing engine (see product.pricelist._compute_price_rule)
-CTX_ENGINE = 'asp_pricing'
-CTX_UOM = 'asp_uom_id'
+from odoo.fields import Domain
 
 TARGET_ANY = '2_any'
 TARGET_UOM = '1_uom'
 
 PRODUCT_SCOPES = ('1_product', '0_product_variant')
+# Odoo 20 rule types computed from a base price (former "formula" rules)
+FORMULA_TYPES = ('discount', 'markup')
 
 
 def uom_root(uom):
@@ -32,10 +30,9 @@ class ProductPricelistItem(models.Model):
     # Scope (applied_on) keeps precedence so the standard hierarchy is preserved.
     _order = "applied_on, asp_target, min_quantity desc, categ_id desc, id desc"
 
-    # Odoo 19: product packagings are units of measure (e.g. "Carton of 24" =
-    # 24 Units), so a single condition covers both units and packagings.
+    # Odoo 20 defines uom_id ("Packaging") on rules and matches it against the
+    # line unit; this app makes the rule amounts per that unit / package.
     uom_id = fields.Many2one(
-        comodel_name='uom.uom',
         string="Unit / Packaging",
         ondelete='cascade',
         index=True,
@@ -88,15 +85,19 @@ class ProductPricelistItem(models.Model):
         for item in self:
             item.asp_target = TARGET_UOM if item.uom_id else TARGET_ANY
 
-    @api.depends('applied_on', 'product_id', 'product_tmpl_id',
+    @api.depends('applied_on', 'product_id', 'product_tmpl_id', 'product_id.extra_uom_ids',
                  'product_tmpl_id.uom_id', 'product_tmpl_id.uom_ids')
     def _compute_asp_allowed_uom_ids(self):
         all_uoms = None
         for item in self:
             product = item._asp_scope_product()
             if product:
-                # Same choice as on sales order lines: the product unit and its packagings.
-                item.asp_allowed_uom_ids = product.uom_id | product.uom_ids
+                # Same choice as on sales order lines: the product unit and its packagings
+                # (Odoo 20 also has variant-specific packagings).
+                uoms = product.uom_id | product.uom_ids
+                if product._name == 'product.product':
+                    uoms |= product.extra_uom_ids
+                item.asp_allowed_uom_ids = uoms
             else:
                 if all_uoms is None:
                     all_uoms = self.env['uom.uom'].search([])
@@ -114,7 +115,7 @@ class ProductPricelistItem(models.Model):
     def _compute_price_label(self):
         super()._compute_price_label()
         for item in self:
-            if item.compute_price == 'formula' and item.price_surcharge_percent:
+            if item.compute_price in FORMULA_TYPES and item.price_surcharge_percent:
                 item.price = _(
                     "%(price)s and %(fee)s %% extra fee on the %(basis)s",
                     price=item.price.strip(), fee=item.price_surcharge_percent,
@@ -128,7 +129,7 @@ class ProductPricelistItem(models.Model):
     def _compute_rule_tip(self):
         super()._compute_rule_tip()
         for item in self:
-            if item.compute_price == 'formula' and item.price_surcharge_percent:
+            if item.compute_price in FORMULA_TYPES and item.price_surcharge_percent:
                 item.rule_tip = item._asp_percent_fee_rule_tip()
             unit_label = item._asp_unit_label()
             if item.rule_tip and unit_label:
@@ -136,6 +137,21 @@ class ProductPricelistItem(models.Model):
                     item.rule_tip,
                     _("Base price, extra fee and margins are computed per %s.", unit_label),
                 )
+
+    @api.depends('price_surcharge_percent')
+    def _compute_is_plain_discount(self):
+        # A percentage fee makes the result differ from "price - discount %":
+        # Odoo must not show it as a plain discount on order lines.
+        super()._compute_is_plain_discount()
+        for item in self:
+            if item.price_surcharge_percent:
+                item.is_plain_discount = False
+
+    def _search_is_plain_discount(self, operator, value):
+        domain = super()._search_is_plain_discount(operator, value)
+        if operator == 'in':
+            return domain & Domain('price_surcharge_percent', '=', 0)
+        return domain | Domain('price_surcharge_percent', '!=', 0)
 
     # ------------------------------------------------------------------
     # Constraints / onchanges / CRUD
@@ -162,7 +178,7 @@ class ProductPricelistItem(models.Model):
         if any(item.price_max_margin and item.price_min_margin > item.price_max_margin for item in self):
             raise ValidationError(_('The minimum margin should be lower than the maximum margin.'))
 
-    @api.onchange('applied_on', 'product_id', 'product_tmpl_id', 'display_applied_on')
+    @api.onchange('product_id', 'product_tmpl_id', 'categ_id')
     def _asp_onchange_scope(self):
         for item in self:
             if item.uom_id and item.uom_id not in item.asp_allowed_uom_ids:
@@ -172,27 +188,10 @@ class ProductPricelistItem(models.Model):
     def _onchange_compute_price(self):
         res = super()._onchange_compute_price()
         for item in self:
-            if item.compute_price != 'formula':
+            if item.compute_price not in FORMULA_TYPES:
                 item.price_surcharge_percent = 0.0
                 item.price_surcharge_percent_base = 'base'
         return res
-
-    @api.model
-    def _asp_sync_display_applied_on(self, vals):
-        """Odoo 18+ rule form shows a "Product / Category" radio (display_applied_on)
-        that core only sets through onchanges: category rules created by import
-        or code would open as "Product" with the category hidden."""
-        if 'display_applied_on' in vals:
-            return vals
-        applied_on = vals.get('applied_on')
-        if not applied_on and 'categ_id' in vals:
-            applied_on = ('2_product_category' if vals['categ_id'] and not vals.get('product_id')
-                          and not vals.get('product_tmpl_id') else False)
-        if applied_on == '2_product_category':
-            vals['display_applied_on'] = '2_product_category'
-        elif applied_on:
-            vals['display_applied_on'] = '1_product'
-        return vals
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -202,17 +201,28 @@ class ProductPricelistItem(models.Model):
             for fname in ('compute_price', 'base', 'price_surcharge_percent_base'):
                 if fname in vals and not vals[fname]:
                     del vals[fname]
-            # (Odoo 18+ create() deduces product_tmpl_id from product_id itself.)
-            self._asp_sync_display_applied_on(vals)
+            self._asp_sanitize_markup(vals)
         return super().create(vals_list)
 
     def write(self, vals):
-        self._asp_sync_display_applied_on(vals)
         # Required selections cannot be emptied (empty import cells): keep the current value.
         for fname in ('compute_price', 'base', 'price_surcharge_percent_base'):
             if fname in vals and not vals[fname]:
                 vals = {k: v for k, v in vals.items() if k != fname}
+        if 'price_markup' in vals:
+            vals = self._asp_sanitize_markup(dict(vals))
         return super().write(vals)
+
+    @api.model
+    def _asp_sanitize_markup(self, vals):
+        """Imports send every column of the file: an empty 'price_markup' cell
+        (0) would overwrite the discount of a Discount rule through the markup
+        inverse (price_discount = -price_markup). Only a filled markup counts."""
+        if 'price_markup' in vals:
+            markup = vals.pop('price_markup')
+            if markup:
+                vals['price_discount'] = -markup
+        return vals
 
     @api.model
     def get_import_templates(self):
@@ -222,7 +232,7 @@ class ProductPricelistItem(models.Model):
                 'template': '/sales_pricelist_advanced/static/xls/asp_pricelist_rules_basic.xlsx',
             },
             {
-                'label': _("Pricelist rules - All rule types (discounts, formulas)"),
+                'label': _("Pricelist rules - All rule types (discounts, surcharges)"),
                 'template': '/sales_pricelist_advanced/static/xls/asp_pricelist_rules_advanced.xlsx',
             },
         ]
@@ -238,10 +248,8 @@ class ProductPricelistItem(models.Model):
             return self.product_id
         if self.applied_on == '1_product' and self.product_tmpl_id:
             return self.product_tmpl_id
-        if self.applied_on in ('2_product_category', '3_global'):
-            return self.env['product.template']
-        # applied_on still being set by an onchange: be lenient.
-        return self.product_id or self.product_tmpl_id
+        # Odoo 20 computes applied_on from the category / product fields.
+        return self.env['product.template']
 
     def _asp_unit_label(self):
         self.ensure_one()
@@ -250,16 +258,8 @@ class ProductPricelistItem(models.Model):
     def _asp_is_targeted(self):
         return bool(self) and self.asp_target == TARGET_UOM
 
-    def _asp_requested_uom(self, product):
-        """Unit requested by the current pricing call (product unit by default)."""
-        ctx = self.env.context
-        uom = self.env['uom.uom']
-        if ctx.get(CTX_ENGINE):
-            uom = uom.browse(ctx.get(CTX_UOM) or [])
-        return uom or product.uom_id
-
     def _asp_has_percent_fee(self):
-        return bool(self) and self.compute_price == 'formula' and bool(self.price_surcharge_percent)
+        return bool(self) and self.compute_price in FORMULA_TYPES and bool(self.price_surcharge_percent)
 
     def _asp_fee_basis_label(self):
         self.ensure_one()
@@ -267,7 +267,7 @@ class ProductPricelistItem(models.Model):
         return selection.get(self.price_surcharge_percent_base or 'base', '')
 
     def _asp_apply_formula(self, base_price, convert=None):
-        """Odoo 19 formula, extended with the percentage extra fee.
+        """Odoo 20 discount / markup formula, extended with the percentage extra fee.
 
         Same order as the standard engine: discount -> rounding -> extra fees
         -> min/max margins. ``base_price`` is expressed in the unit the result
@@ -277,9 +277,8 @@ class ProductPricelistItem(models.Model):
         self.ensure_one()
         convert = convert or (lambda amount: amount)
         price_limit = base_price
-        # Odoo 18+: rules based on the cost use the markup (kept equal to -price_discount)
-        discount = self.price_discount if self.base != 'standard_price' else -self.price_markup
-        price = (base_price - (base_price * (discount / 100))) or 0.0
+        # A markup is stored as a negative discount (price_markup = -price_discount).
+        price = (base_price - (base_price * (self.price_discount / 100))) or 0.0
         if self.price_round:
             price = tools.float_round(price, precision_rounding=self.price_round)
         discounted_price = price
@@ -316,62 +315,48 @@ class ProductPricelistItem(models.Model):
     # Engine
     # ------------------------------------------------------------------
 
-    def _is_applicable_for(self, product, qty_in_product_uom):
-        self.ensure_one()
-        if not self._asp_is_targeted():
-            return super()._is_applicable_for(product, qty_in_product_uom)
+    # Odoo 20 matches the rule unit itself (_is_applicable_for and the rule
+    # domain receive the requested unit) and counts the minimum quantity in
+    # that unit. Only the price differs: core keeps fixed price, extra fee and
+    # margins per product unit, this app reads them per rule unit / package.
 
+    def _compute_price(self, product, quantity, uom, **kwargs):
+        if len(self) != 1 or not (self._asp_is_targeted() or self._asp_has_percent_fee()):
+            return super()._compute_price(product, quantity, uom, **kwargs)
         product.ensure_one()
-        if self.uom_id != self._asp_requested_uom(product) or uom_root(self.uom_id) != uom_root(product.uom_id):
-            return False
-        qty_precision = self.env['decimal.precision'].precision_get('Product Unit')
-        rule_qty = product.uom_id._compute_quantity(qty_in_product_uom, self.uom_id, round=False)
-        if self.min_quantity and float_compare(rule_qty, self.min_quantity, precision_digits=qty_precision) < 0:
-            return False
-        # The min. quantity was checked in the rule unit: let the standard
-        # implementation validate the scope (product / variant / category) only.
-        return super()._is_applicable_for(product, max(qty_in_product_uom, self.min_quantity))
+        uom = uom or product._get_main_uom()
+        uom.ensure_one()
 
-    def _compute_price(self, product, quantity, uom, date, currency=None, **kwargs):
-        if len(self) != 1:
-            return super()._compute_price(product, quantity, uom, date, currency=currency, **kwargs)
         if not self._asp_is_targeted():
-            if not self._asp_has_percent_fee():
-                return super()._compute_price(product, quantity, uom, date, currency=currency, **kwargs)
-            # Generic formula rule with a percentage fee: same as the standard
-            # formula (amounts stored per product unit, base price in `uom`).
-            product.ensure_one()
-            uom.ensure_one()
-            currency = currency or self.currency_id
-            currency.ensure_one()
+            # Generic rule with a percentage fee: standard formula (amounts per
+            # product unit, converted to `uom`) plus the fee.
             product_uom = product.uom_id
             convert = (lambda p: product_uom._compute_price(p, uom)) if product_uom != uom else None
-            base_price = self._compute_base_price(product, quantity, uom, date, currency, **kwargs)
+            base_price = self._compute_base_price(product, quantity, uom, **kwargs)
             return self._asp_apply_formula(base_price, convert)
-
-        product.ensure_one()
-        uom.ensure_one()
-        currency = currency or self.currency_id
-        currency.ensure_one()
 
         rule_uom = self.uom_id
         if uom_root(rule_uom) != uom_root(uom):
             # Should never happen for a matching rule; stay safe and standard.
-            return super()._compute_price(product, quantity, uom, date, currency=currency, **kwargs)
+            return super()._compute_price(product, quantity, uom, **kwargs)
 
         def to_requested_uom(price_per_rule_unit):
             return rule_uom._compute_price(price_per_rule_unit, uom)
 
         if self.compute_price == 'fixed':
-            return to_requested_uom(self.fixed_price)
+            # Same attribute extra prices as the standard fixed price.
+            if self.applied_on == '0_product_variant':
+                extra_price = self.env.context.get('no_variant_attributes_price_extra', 0)
+            else:
+                extra_price = product._get_attributes_extra_price()
+            extra_price = product.uom_id._compute_price(extra_price, uom)
+            extra_price = self._convert_price(extra_price, product.currency_id, **kwargs)
+            return to_requested_uom(self.fixed_price) + extra_price
 
         # Base price for ONE rule unit (one package / one unit of the rule).
         qty_in_rule_uom = uom._compute_quantity(quantity, rule_uom, round=False)
-        base_price = self._compute_base_price(product, qty_in_rule_uom, rule_uom, date, currency, **kwargs)
-
-        if self.compute_price == 'percentage':
-            price = (base_price - (base_price * (self.percent_price / 100))) or 0.0
-        elif self.compute_price == 'formula':
+        base_price = self._compute_base_price(product, qty_in_rule_uom, rule_uom, **kwargs)
+        if self.compute_price in FORMULA_TYPES:
             # Amounts of a unit / packaging rule are already per rule unit.
             price = self._asp_apply_formula(base_price)
         else:

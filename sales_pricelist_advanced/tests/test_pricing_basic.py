@@ -147,10 +147,10 @@ class TestBasicPricing(AspCommon):
         self.assertAlmostEqual(prices[self.juice.id][0], 60.0, places=6)
 
     def test_unknown_caller_without_uom_ignores_unit_rules(self):
-        """Engine called without a unit: rules for other units never match."""
+        """Engine called without a unit (product unit assumed): rules for other units never match."""
         self._product_item(uom_id=self.carton.id, fixed_price=1.0)
-        rules = self.pricelist._get_applicable_rules(self.product, False)
-        self.assertFalse(rules)
+        self.assertFalse(self.pricelist._get_product_rule(self.product, 24))
+        self.assertAlmostEqual(self._price(self.pricelist, self.product, 24), 10.0, places=6)
 
     def test_exact_subtotal_for_uneven_package_price(self):
         """200.00 per carton of 24 sold by the unit: Odoo 19 keeps full precision."""

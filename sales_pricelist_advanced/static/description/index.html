@@ -1,15 +1,15 @@
-<!-- Odoo Apps description page for sales_pricelist_advanced (Odoo 19.0). Inline styles only: apps.odoo.com strips <style> and <script> blocks. -->
+<!-- Odoo Apps description page for sales_pricelist_advanced (Odoo 20.0). Inline styles only: apps.odoo.com strips <style> and <script> blocks. -->
 <section style="max-width:1120px;margin:0 auto;padding:0 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#2b2b33;">
 
 <!-- ============================== HERO ============================== -->
 <div style="background:linear-gradient(120deg,#017E84 0%,#3d6b78 45%,#714B67 100%);border-radius:18px;padding:48px 40px 40px;color:#ffffff;margin-top:12px;">
   <div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-bottom:10px;">Sales &middot; Pricelists &middot; Point of Sale</div>
   <h1 style="font-size:40px;line-height:1.15;font-weight:700;margin:0 0 14px;color:#ffffff;">Advanced Sales Pricelist</h1>
-  <p style="font-size:19px;line-height:1.55;max-width:760px;margin:0 0 24px;color:#ffffff;opacity:.95;">Give a product its own price per <b>unit</b> and per <b>packaging</b> (a carton, a pack of 6, a dozen), add <b>percentage extra fees</b> to formula rules, and load thousands of rules from <b>ready-made Excel templates</b>. Built for Odoo 19, where packagings are units.</p>
+  <p style="font-size:19px;line-height:1.55;max-width:760px;margin:0 0 24px;color:#ffffff;opacity:.95;">Give a product its own price per <b>unit</b> and per <b>packaging</b> (a carton, a pack of 6, a dozen), add <b>percentage extra fees</b> to discount and surcharge rules, and load thousands of rules from <b>ready-made Excel templates</b>. Built for Odoo 20, where packagings are units.</p>
   <div>
-    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Odoo 19.0</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Odoo 20.0</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Community &amp; Enterprise</span>
-    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">114 automated tests</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">115 automated tests</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Arabic &amp; RTL</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Point of Sale not required</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Technical name: sales_pricelist_advanced</span>
@@ -22,7 +22,7 @@
   <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">Unit / Packaging</div><div style="font-size:15px;color:#555;">A new condition on every pricelist rule</div></div>
   <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">Extra Fee (%)</div><div style="font-size:15px;color:#555;">On the base price or on the discounted price</div></div>
   <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">4 Excel templates</div><div style="font-size:15px;color:#555;">Rules and pricelists: fixed prices or every rule type</div></div>
-  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">114 tests</div><div style="font-size:15px;color:#555;">Including a real browser test of the POS prices</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">115 tests</div><div style="font-size:15px;color:#555;">Including a real browser test of the POS prices</div></div>
 </div>
 
 
@@ -32,19 +32,19 @@
 </div>
 
 <div style="margin-top:14px;background:#f4fbfb;border:1px solid #cfe7e7;border-radius:14px;padding:20px 24px;font-size:15px;line-height:1.6;">
-  <b style="color:#017E84;">New in Odoo 19:</b> packagings are units. A <b>Carton of 24</b> is a unit worth 24 Units, listed in the product&rsquo;s <b>Packagings</b>, and a quotation line sold in cartons has the carton as its unit. This version of the app follows that model: one <b>Unit / Packaging</b> condition on rules, quantities converted between units and packagings, and packaging rules from Odoo 18 moved automatically on upgrade.
+  <b style="color:#017E84;">New in Odoo 20:</b> pricelist rules get a <b>Packaging</b> condition and three rule types: <b>Discount</b>, <b>Surcharge</b> and <b>Fixed Price</b>. This version of the app builds on them: the condition becomes <b>Unit / Packaging</b>, available on product, category and global rules, and a packaging rule keeps its amounts <b>per package</b> (in standard Odoo 20 a fixed price on a carton rule is still read per unit and multiplied by 24).
 </div>
 
 <!-- ============================== WHY ============================== -->
 <h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Why this module</h2>
-<p style="font-size:16px;color:#555;margin:0 0 18px;">Distributors sell the same product by the unit, by the dozen and by the carton, at different prices. Odoo 19 lets you sell in packagings, but its pricelists only multiply the unit price.</p>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Distributors sell the same product by the unit, by the dozen and by the carton, at different prices. Odoo 20 lets a rule match a packaging, but its amounts are still read per unit.</p>
 <div style="display:flex;flex-wrap:wrap;margin:0 -10px;">
   <div style="flex:1 1 440px;margin:10px;border:1px solid #f1d6d6;background:#fff8f8;border-radius:14px;padding:24px 26px;">
-    <h3 style="font-size:19px;font-weight:700;color:#b33939;margin:0 0 12px;">In standard Odoo 19</h3>
+    <h3 style="font-size:19px;font-weight:700;color:#b33939;margin:0 0 12px;">In standard Odoo 20</h3>
     <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
-      <li>A rule cannot target a unit or a packaging: a <b>Carton of 24</b> is always 24&nbsp;&times; the unit price, a dozen 12&nbsp;&times;.</li>
-      <li>No tiers counted in cartons; a formula cannot be computed per carton.</li>
-      <li>Formula rules accept a <b>fixed extra fee only</b>.</li>
+      <li>A product rule can match a packaging, but its fixed price, fee and margins are <b>per unit</b>: a <b>Carton of 24</b> rule at 25.00 bills 600.00 a carton.</li>
+      <li>Category and global rules cannot target a unit or a packaging (e.g. &ldquo;4&nbsp;% off everything sold by the dozen&rdquo;).</li>
+      <li>Discount and surcharge rules accept a <b>fixed extra fee only</b>.</li>
       <li>Changing the line unit keeps the number: <b>24 Units become 24 Cartons</b>.</li>
       <li>Nothing prevents 1.25 cartons on a quotation.</li>
       <li>Only a basic import template for pricelists; <b>no template for pricelist rules</b>, unit or packaging prices.</li>
@@ -53,7 +53,7 @@
   <div style="flex:1 1 440px;margin:10px;border:1px solid #cfe7e7;background:#f4fbfb;border-radius:14px;padding:24px 26px;">
     <h3 style="font-size:19px;font-weight:700;color:#017E84;margin:0 0 12px;">With this module</h3>
     <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
-      <li>Rules per <b>packaging</b>: price per carton, tiers counted in cartons, formulas computed per carton.</li>
+      <li>Rules per <b>packaging</b>: price per carton, tiers counted in cartons, discounts and surcharges computed per carton.</li>
       <li>Rules per <b>unit</b>: set the real price of a dozen, with its own minimum quantity.</li>
       <li><b>Extra Fee (%)</b> next to the fixed fee, on the base or the discounted price.</li>
       <li>The quantity is <b>converted</b>: 24 Units become 1 Carton of 24 (company setting).</li>
@@ -94,23 +94,23 @@
 <div style="margin:44px 0 0;">
   <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 2</div>
   <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Unit / packaging condition on every rule type</h3>
-  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">In the rule form, <b>Unit / Packaging</b> sits right under the product and offers the product unit and its packagings. Every rule (fixed price, discount or formula) can be limited to one. A unit rule can also apply to all products or a category, e.g. &ldquo;4&nbsp;% off everything sold by the dozen&rdquo;. A notice on the rule explains in which unit its amounts are expressed.</p>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">In the rule form, <b>Unit / Packaging</b> sits right under the product and offers the product unit and its packagings. Every rule (fixed price, discount or surcharge) can be limited to one. A unit rule can also apply to all products or a category, e.g. &ldquo;4&nbsp;% off everything sold by the dozen&rdquo;. A notice on the rule explains in which unit its amounts are expressed.</p>
   <img src="asp_03_pricelist_advanced.png" alt="Wholesale pricelist with packaging and unit rules" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);margin-bottom:22px;"/>
   <img src="asp_05_rule_uom.png" alt="Rule 4 percent discount on all products sold in Dozens" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
 </div>
 
 <div style="margin:44px 0 0;">
   <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 3</div>
-  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Percentage extra fee on formula rules</h3>
-  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Formula rules get <b>Extra Fee (%)</b> and <b>% on the</b> <b>Base Price</b> / <b>Discounted Price</b>, next to Odoo&rsquo;s fixed <b>Extra Fee</b>. The formula tip shows a live example. Odoo shows the discount of a <b>Cost</b> based rule as a <b>Markup</b>; the fees work the same way. On a packaging rule the whole formula runs per package: here <b>Cost</b> of a carton + 0.50 + 20&nbsp;%, with a minimum margin of 1.00.</p>
-  <img src="asp_04_rule_packaging_fee.png" alt="Formula rule per Carton of 24 based on cost with fixed and percentage extra fees" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
-  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Order of the formula (as in Odoo):</b> discount &rarr; rounding &rarr; fixed fee + percentage fee &rarr; min/max margins.<br/><b>Example:</b> Sales Price 100.00, discount 10&nbsp;%, fee 5&nbsp;% on the <b>Base Price</b> = 90.00 + 5.00 = <b>95.00</b>; on the <b>Discounted Price</b> = 90.00 + 4.50 = <b>94.50</b>.<br/><b>Carton above:</b> cost 24&nbsp;&times;&nbsp;0.60 = 14.40 + 0.50 + 20&nbsp;% of 14.40 (2.88) = <b>17.78 per carton</b>.</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Percentage extra fee on discount and surcharge rules</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Discount</b> and <b>Surcharge</b> rules get <b>Extra Fee (%)</b> and <b>% on the</b> <b>Base Price</b> / <b>Discounted Price</b>, next to Odoo&rsquo;s fixed amount (<b>Add</b>). The rule name shows the whole computation. On a packaging rule everything runs per package: here a <b>Surcharge</b> on the <b>Cost</b> of a carton + 0.50 + 20&nbsp;%, with a minimum margin of 1.00 (margins are shown in developer mode, as in standard Odoo).</p>
+  <img src="asp_04_rule_packaging_fee.png" alt="Surcharge rule per Carton of 24 based on cost with fixed and percentage extra fees" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Order of the computation (as in Odoo):</b> discount &rarr; rounding &rarr; fixed fee + percentage fee &rarr; min/max margins.<br/><b>Example:</b> Sales Price 100.00, discount 10&nbsp;%, fee 5&nbsp;% on the <b>Base Price</b> = 90.00 + 5.00 = <b>95.00</b>; on the <b>Discounted Price</b> = 90.00 + 4.50 = <b>94.50</b>.<br/><b>Carton above:</b> cost 24&nbsp;&times;&nbsp;0.60 = 14.40 + 0.50 + 20&nbsp;% of 14.40 (2.88) = <b>17.78 per carton</b>.</div>
 </div>
 
 <div style="margin:44px 0 0;">
   <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 4</div>
   <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Quotations priced per carton, per dozen or per unit</h3>
-  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">In Odoo 19 the line <b>Unit</b> is the packaging, so the <b>Unit Price</b> is the price of one carton (17.78) and the quantity is a number of cartons. Lines without a packaging rule fall back to the next applicable rule: the 30 loose bottles use the category formula (0.90).</p>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">In Odoo 20 the line <b>Unit</b> is the packaging, so the <b>Unit Price</b> is the price of one carton (17.78) and the quantity is a number of cartons. Lines without a packaging rule fall back to the next applicable rule: the 30 loose bottles use the category discount (0.90).</p>
   <img src="asp_06_quotation.png" alt="Quotation with lines sold per Carton of 24, Carton of 12, Carton of 48, Dozens and Units" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);margin-bottom:22px;"/>
   <img src="asp_07_quotation_export.png" alt="Quotation in EUR with the Export Europe pricelist" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
   <div style="font-size:13px;color:#777;margin:6px 0 0;">Export Europe: EUR pricelist based on Wholesale (&minus;5&nbsp;%, +2&nbsp;% fee on the discounted price). The packaging unit is passed on to the base pricelist.</div>
@@ -127,32 +127,32 @@
 <div style="margin:44px 0 0;">
   <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 6</div>
   <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Bulk review and editing of all rules</h3>
-  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Pricelist Rules</b> is an editable grid over all pricelists, with multi-edit, sorting, filter <b>Unit / Packaging Rules</b>, grouping by <b>Unit / Packaging</b> and export. Only the cells that apply to each rule are shown; formula columns (including <b>Markup</b>) are optional columns.</p>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Pricelist Rules</b> is an editable grid over all pricelists, with multi-edit, sorting, filter <b>Unit / Packaging Rules</b>, grouping by <b>Unit / Packaging</b> and export. Only the cells that apply to each rule are shown; computation columns (<b>Price Discount</b>, <b>Surcharge</b>, fees, rounding, margins) are optional columns.</p>
   <img src="asp_09_rules_grid.png" alt="Editable Pricelist Rules grid with discount and percentage fee columns" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
 </div>
 
 <div style="margin:44px 0 0;">
   <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 7</div>
   <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Four Excel templates, mapped automatically</h3>
-  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Download them from the gear menu <b>&#9881; &rsaquo; Import records</b> of <b>Pricelist Rules</b> or <b>Pricelists</b>; each one appears with its own name. Every workbook has drop-down lists for the choice columns, a note on each header and an <b>Instructions</b> sheet in English and Arabic explaining every column and every example row. The files are also in the module folder <code>excel_templates/</code>.</p>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Download them from the action menu <b>&#8942; &rsaquo; Import</b> of <b>Pricelist Rules</b> or <b>Pricelists</b>; each one appears with its own name. Every workbook has drop-down lists for the choice columns, a note on each header and an <b>Instructions</b> sheet in English and Arabic explaining every column and every example row. The files are also in the module folder <code>excel_templates/</code>.</p>
   <table style="width:100%;border-collapse:collapse;font-size:15px;overflow-wrap:anywhere;word-break:break-word;margin-bottom:22px;">
     <thead><tr style="background:#714B67;color:#fff;"><th style="text-align:left;padding:10px 14px;">Template</th><th style="text-align:left;padding:10px 14px;">Import from</th><th style="text-align:left;padding:10px 14px;">Use it to</th></tr></thead>
     <tbody>
       <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;">Pricelist rules &ndash; Fixed prices (product, unit, packaging)</td><td style="padding:10px 14px;">Pricelist Rules</td><td style="padding:10px 14px;">Add fixed prices (unit, UoM, packaging, tiers, dates) to existing pricelists</td></tr>
-      <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Pricelist rules &ndash; All rule types (discounts, formulas)</td><td style="padding:10px 14px;">Pricelist Rules</td><td style="padding:10px 14px;">Add any rule: all scopes, fixed / discount / formula, fees, margins, other pricelist</td></tr>
+      <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Pricelist rules &ndash; All rule types (discounts, surcharges)</td><td style="padding:10px 14px;">Pricelist Rules</td><td style="padding:10px 14px;">Add any rule: all scopes, fixed / discount / surcharge, fees, margins, other pricelist</td></tr>
       <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;">Pricelists with rules &ndash; Fixed prices (product, unit, packaging)</td><td style="padding:10px 14px;">Pricelists</td><td style="padding:10px 14px;">Create pricelists (currency, country groups) and their prices</td></tr>
-      <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Pricelists with rules &ndash; All rule types (discounts, formulas)</td><td style="padding:10px 14px;">Pricelists</td><td style="padding:10px 14px;">Create pricelists and any kind of rule in one file</td></tr>
+      <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Pricelists with rules &ndash; All rule types (discounts, surcharges)</td><td style="padding:10px 14px;">Pricelists</td><td style="padding:10px 14px;">Create pricelists and any kind of rule in one file</td></tr>
     </tbody>
   </table>
   <img src="asp_10_excel_template.png" alt="Excel template for pricelist rules with a unit / packaging column" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);margin-bottom:22px;"/>
   <img src="asp_11_import_test.png" alt="Import screen: template columns mapped automatically, Everything seems valid" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
-  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Built for real files:</b> headers are technical names, so they map in every language. Units and packagings are given by name in <code>uom_id</code> (&ldquo;Carton of 24&rdquo;): in Odoo 19 one packaging unit is shared by all the products that use it. Empty cells keep the defaults (Sales Price, Base Price, company currency). Every template is imported through Odoo&rsquo;s importer in the automated tests.</div>
+  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Built for real files:</b> headers are technical names, so they map in every language. Units and packagings are given by name in <code>uom_id</code> (&ldquo;Carton of 24&rdquo;): in Odoo 20 one packaging unit is shared by all the products that use it. There is no <i>Apply On</i> column: the scope follows the filled column (variant, product, category or none for all products). Empty cells keep the defaults (Sales Price, Base Price, company currency). Every template is imported through Odoo&rsquo;s importer in the automated tests.</div>
 </div>
 
 <div style="margin:44px 0 0;">
   <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 8</div>
   <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Arabic translation and right-to-left layout</h3>
-  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">All fields, notices, notifications, error messages and the formula tip are translated (<b>ar_001</b> and <b>ar</b>). The template instructions are bilingual.</p>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">All fields, notices, notifications, error messages and rule descriptions are translated (<b>ar_001</b> and <b>ar</b>). The template instructions are bilingual.</p>
   <img src="asp_13_arabic.png" alt="Pricelist rule form in Arabic, right to left" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
 </div>
 
@@ -177,7 +177,7 @@
 
 <!-- ============================== POINT OF SALE ============================== -->
 <h2 id="asp_pos" style="font-size:28px;font-weight:700;margin:48px 0 6px;color:#2b2b33;">Point of Sale companion app</h2>
-<p style="font-size:16px;color:#555;margin:0 0 18px;">The Odoo 19 Point of Sale computes prices in the browser with its own copy of the pricelist logic, so it needs a small companion: <b>Advanced Sales Pricelist &ndash; Point of Sale bridge</b>, published as a separate app.</p>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">The Odoo 20 Point of Sale computes prices in the browser with its own copy of the pricelist logic, so it needs a small companion: <b>Advanced Sales Pricelist &ndash; Point of Sale bridge</b>, published as a separate app.</p>
 <div style="display:flex;flex-wrap:wrap;margin:0 -10px;">
   <div style="flex:1 1 440px;margin:10px;border:1px solid #e3dde2;background:#f6f4f6;border-radius:14px;padding:24px 26px;">
     <h3 style="font-size:19px;font-weight:700;color:#714B67;margin:0 0 12px;">Installation</h3>
@@ -191,7 +191,7 @@
   <div style="flex:1 1 440px;margin:10px;border:1px solid #cfe7e7;background:#f4fbfb;border-radius:14px;padding:24px 26px;">
     <h3 style="font-size:19px;font-weight:700;color:#017E84;margin:0 0 12px;">What it does</h3>
     <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
-      <li>Adds <b>Extra Fee (%)</b> to the POS price engine, with the same formula order as the backend.</li>
+      <li>Adds <b>Extra Fee (%)</b> to the POS price engine, with the same computation order as the backend.</li>
       <li>Keeps rules with a <b>Unit / Packaging</b> condition out of the POS: POS lines are always in the product&rsquo;s unit (a packaging barcode adds its quantity in units), so a box price is never charged on one unit.</li>
       <li>Packaging and unit prices stay available on quotations and sales orders.</li>
       <li>To give the box price at the till, use a rule <b>without packaging</b> and with <b>Min. Quantity</b> = box size.</li>
@@ -205,14 +205,14 @@
 <h2 style="font-size:28px;font-weight:700;margin:48px 0 6px;color:#2b2b33;">Built for real-world corner cases</h2>
 <p style="font-size:16px;color:#555;margin:0 0 18px;">Each case below is covered by an automated test.</p>
 <div style="display:flex;flex-wrap:wrap;margin:0 -8px;font-size:15px;line-height:1.55;">
-  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Upgrade from Odoo 18</b><br/><span style="color:#555;">Odoo 19 removed product packagings: a migration script moves your packaging rules to the packaging unit with the same name and quantity, and logs any rule it cannot match.</span></div>
-  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Multi-currency and chained pricelists</b><br/><span style="color:#555;">Fixed package prices stay in the pricelist currency; formulas convert the base price. The packaging unit is passed on to &ldquo;Other Pricelist&rdquo; rules.</span></div>
-  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Discounts shown the Odoo way</b><br/><span style="color:#555;">With the Discounts setting on, a <b>Discount</b> rule on a carton or a dozen shows its % on the carton list price; fixed and formula rules give a net price, and a mark-up is never shown as a negative discount.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Upgrade from Odoo 19</b><br/><span style="color:#555;">The unit / packaging condition, percentage fees and company options keep their values; Odoo&rsquo;s own upgrade handles the standard rule types. Check packaging rules afterwards: with the app their amounts stay per package.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Multi-currency and chained pricelists</b><br/><span style="color:#555;">Fixed package prices stay in the pricelist currency; discounts and surcharges convert the base price. The packaging unit is passed on to &ldquo;Other Pricelist&rdquo; rules.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Discounts shown the Odoo way</b><br/><span style="color:#555;">With the Discounts setting on, a <b>Discount</b> rule on a carton or a dozen shows its % on the carton list price; fixed prices, surcharges and rules with a percentage fee give a net price.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Tiers in packages</b><br/><span style="color:#555;">&ldquo;From 10 cartons&rdquo; counts cartons on carton lines; a generic rule&rsquo;s minimum quantity still counts product units (1 carton = 24 units).</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Delivered or invoiced lines</b><br/><span style="color:#555;">Quantities are never converted or rounded on lines already delivered or invoiced, and never converted to zero.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Point of Sale</b><br/><span style="color:#555;">With the companion app (installed automatically with Point of Sale), unit / packaging rules stay out of the POS and the percentage fee is added to POS prices.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Wrong configuration</b><br/><span style="color:#555;">A unit that cannot be converted into the product unit (kg on a product sold in units) is rejected with a clear message; a global rule per kg never applies to products counted in units.</span></div>
-  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Minimum margin alone</b><br/><span style="color:#555;">Odoo 19 still rejects a minimum margin without a maximum; the module allows it, matching what the price engine already does.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Minimum margin alone</b><br/><span style="color:#555;">Odoo 20 still rejects a minimum margin without a maximum; the module allows it, matching what the price engine already does.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Deleted packaging, API and imports</b><br/><span style="color:#555;">Deleting a packaging unit removes its rules; prices are available from code with <code>uom=</code>; standard pricing is unchanged when no condition is used.</span></div>
 </div>
 
@@ -233,7 +233,7 @@
 <h2 style="font-size:28px;font-weight:700;margin:48px 0 6px;color:#2b2b33;">Technical details</h2>
 <table style="width:100%;border-collapse:collapse;font-size:15px;overflow-wrap:anywhere;word-break:break-word;">
   <tbody>
-    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Odoo version</td><td style="padding:10px 14px;">19.0, Community and Enterprise (module version 19.0.1.1.0)</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Odoo version</td><td style="padding:10px 14px;">20.0, Community and Enterprise (module version 20.0.1.1.0)</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Depends on</td><td style="padding:10px 14px;"><code>sale</code>, <code>base_import</code></td></tr>
     <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Point of Sale bridge</td><td style="padding:10px 14px;">Separate app <code>sales_pricelist_pos_advanced</code> (depends on this app and <code>point_of_sale</code>, installed automatically when both are present; not needed without Point of Sale)</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Python dependency</td><td style="padding:10px 14px;">None</td></tr>
@@ -241,7 +241,7 @@
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Settings</td><td style="padding:10px 14px;">Sales &rsaquo; Configuration &rsaquo; Settings &rsaquo; Pricing: <b>Keep Quantity on UoM Change</b>, <b>Round Up to Whole Packages</b></td></tr>
     <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Models</td><td style="padding:10px 14px;">Extends <code>product.pricelist.item</code>, <code>product.pricelist</code>, <code>sale.order.line</code>, <code>res.company</code>, <code>res.config.settings</code> (and <code>pos.session</code>, the POS loader of <code>product.pricelist.item</code> in the bridge)</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Excel templates</td><td style="padding:10px 14px;"><code>static/xls/</code> (import screen) and <code>excel_templates/</code> (copies, not loaded)</td></tr>
-    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Automated tests</td><td style="padding:10px 14px;">109 + 5 (POS): packaging and unit pricing, formulas, markups and percentage fees, currencies, chained pricelists, discount display, quantity conversion and rounding to whole packages and rule creation through the real forms, constraints, all 4 templates imported through Odoo&rsquo;s importer (English and Arabic), and the POS prices checked in a headless browser</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Automated tests</td><td style="padding:10px 14px;">110 + 5 (POS): packaging and unit pricing, discounts, surcharges and percentage fees, currencies, chained pricelists, discount display, quantity conversion and rounding to whole packages and rule creation through the real forms, constraints, all 4 templates imported through Odoo&rsquo;s importer (English and Arabic), and the POS prices checked in a headless browser</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Translations</td><td style="padding:10px 14px;">Arabic (<code>ar_001</code>, <code>ar</code>), right-to-left ready</td></tr>
     <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">License</td><td style="padding:10px 14px;">LGPL-3</td></tr>
   </tbody>

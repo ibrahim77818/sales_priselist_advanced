@@ -7,8 +7,10 @@
         <field name="model">product.pricelist</field>
         <field name="inherit_id" ref="product.product_pricelist_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='item_ids']/list/field[@name='min_quantity']" position="after">
-                <field name="uom_id" groups="uom.group_uom" optional="show"/>
+            <!-- Core lists the rule unit (hidden by default, not on category rules) -->
+            <xpath expr="//field[@name='item_ids']/list/field[@name='uom_id']" position="attributes">
+                <attribute name="invisible">False</attribute>
+                <attribute name="optional">show</attribute>
             </xpath>
         </field>
     </record>

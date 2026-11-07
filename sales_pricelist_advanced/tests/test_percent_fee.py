@@ -15,7 +15,8 @@ class TestPercentFee(AspCommon):
         super().setUpClass()
 
     def _fee_rule(self, pricelist=None, **vals):
-        return self._product_item(pricelist, compute_price='formula', **vals)
+        compute_price = 'markup' if vals.get('base') == 'standard_price' else 'discount'
+        return self._product_item(pricelist, compute_price=compute_price, **vals)
 
     # ------------------------------------------------------------ formula
     def test_fee_on_base_price(self):
@@ -64,9 +65,9 @@ class TestPercentFee(AspCommon):
         self.assertFalse(rule._asp_has_percent_fee())
         self.assertAlmostEqual(self._price(self.pricelist, self.product, 1), 9.5)
 
-    def test_fee_ignored_for_non_formula_rules(self):
-        self._product_item(compute_price='percentage', percent_price=10, price_surcharge_percent=50)
-        self.assertAlmostEqual(self._price(self.pricelist, self.product, 1), 9.0)
+    def test_fee_ignored_for_fixed_price_rules(self):
+        self._product_item(compute_price='fixed', fixed_price=7.0, price_surcharge_percent=50)
+        self.assertAlmostEqual(self._price(self.pricelist, self.product, 1), 7.0)
 
     # ------------------------------------------------ targeted rules
     def test_fee_on_packaging_rule(self):
@@ -135,7 +136,7 @@ class TestPercentFee(AspCommon):
         form = Form(self.pricelist)
         with form.item_ids.new() as item:
             item.product_tmpl_id = self.tmpl
-            item.compute_price = 'formula'
+            item.compute_price = 'discount'
             item.price_discount = 10
             item.price_surcharge_percent = 5
             item.price_surcharge_percent_base = 'discounted'
@@ -150,7 +151,7 @@ class TestPercentFee(AspCommon):
         form = Form(self.pricelist)
         with form.item_ids.new() as item:
             item.product_tmpl_id = self.tmpl
-            item.compute_price = 'formula'
+            item.compute_price = 'discount'
             item.price_surcharge_percent = 5
             item.price_surcharge_percent_base = 'discounted'
             item.compute_price = 'fixed'

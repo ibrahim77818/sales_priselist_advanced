@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Rule form (Odoo 19 layout). Packagings are units in Odoo 19: one field covers both. -->
+    <!-- Rule form (Odoo 20 layout): core shows the rule unit next to the minimum quantity. -->
     <record id="product_pricelist_item_form_view_inherit_asp" model="ir.ui.view">
         <field name="name">product.pricelist.item.form.asp</field>
         <field name="model">product.pricelist.item</field>
         <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='pricelist_rule_method']/field[@name='product_id']" position="after">
+            <xpath expr="//group[@name='pricelist_rule_target']/field[@name='product_id']" position="after">
                 <field name="asp_target" invisible="1"/>
                 <field name="asp_allowed_uom_ids" invisible="1"/>
-                <field name="uom_id"
-                       groups="uom.group_uom"
-                       options="{'no_create': True}"
-                       domain="[('id', 'in', asp_allowed_uom_ids)]"
-                       placeholder="Any unit"/>
+            </xpath>
+            <!-- Any unit on category / global rules; product unit and packagings otherwise -->
+            <xpath expr="//group[@name='min_quantity']//field[@name='uom_id']" position="attributes">
+                <attribute name="domain">[('id', 'in', asp_allowed_uom_ids)]</attribute>
+                <attribute name="placeholder">Any unit</attribute>
             </xpath>
             <!-- "per <unit>" next to the fixed price: the rule unit when there is one -->
             <xpath expr="//field[@name='fixed_price']/../span[field[@name='product_uom_name']]" position="attributes">
@@ -25,8 +25,8 @@
             </xpath>
             <xpath expr="//group[@name='pricelist_rule_base']//field[@name='price_surcharge']" position="after">
                 <label for="price_surcharge_percent" string="Extra Fee (%)"
-                       invisible="compute_price != 'formula'"/>
-                <div class="o_row" invisible="compute_price != 'formula'">
+                       invisible="compute_price == 'fixed'"/>
+                <div class="o_row" invisible="compute_price == 'fixed'">
                     <field name="price_surcharge_percent" class="oe_inline"/>
                     <span>% on the</span>
                     <field name="price_surcharge_percent_base" class="oe_inline"
@@ -62,11 +62,10 @@
         <field name="arch" type="xml">
             <field name="min_quantity" position="before">
                 <field name="asp_allowed_uom_ids" column_invisible="True"/>
-                <field name="uom_id"
-                       groups="uom.group_uom"
-                       optional="show"
-                       options="{'no_create': True, 'no_open': True}"
-                       domain="[('id', 'in', asp_allowed_uom_ids)]"/>
+            </field>
+            <field name="uom_id" position="attributes">
+                <attribute name="optional">show</attribute>
+                <attribute name="domain">[('id', 'in', asp_allowed_uom_ids)]</attribute>
             </field>
         </field>
     </record>

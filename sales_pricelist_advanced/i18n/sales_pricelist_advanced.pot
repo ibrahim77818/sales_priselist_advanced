@@ -4,16 +4,39 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0\n"
+"Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-04 16:48+0000\n"
-"PO-Revision-Date: 2026-11-04 16:48+0000\n"
+"POT-Creation-Date: 2026-11-07 15:14+0000\n"
+"PO-Revision-Date: 2026-11-07 15:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sales_pricelist_advanced
+#: model:ir.module.module,description:base.module_sales_pricelist_advanced
+msgid ""
+"\n"
+"Advanced Sales Pricelist\n"
+"========================\n"
+"* Target pricelist rules to a specific unit or packaging (in Odoo 20 a\n"
+"  packaging such as \"Carton of 24\" is a unit of the product).\n"
+"* Fixed prices, extra fees, margins and minimum quantities of these rules are\n"
+"  expressed per that unit / per package.\n"
+"* Priority engine: unit / packaging rules > generic rules, within the\n"
+"  standard scope order (variant > product > category > global).\n"
+"* Works with fixed prices, discounts and surcharges, discounts shown on\n"
+"  quotations (Discounts setting), chained and multi-currency pricelists.\n"
+"* Discount and surcharge rules: percentage extra fee (on the base or the discounted price)\n"
+"  in addition to the fixed extra fee (also applied by the Point of Sale).\n"
+"* Excel import templates (fixed prices or all rule types; pricelists with\n"
+"  rules, or rules for existing pricelists) and a \"Pricelist Rules\" bulk-edit screen.\n"
+"* Sales order lines: optional conversion of the quantity when the unit or\n"
+"  packaging changes, rounded up to whole packages.\n"
+"* Full Arabic (ar_001) translation, RTL-safe views.\n"
+msgstr ""
 
 #. module: sales_pricelist_advanced
 #. odoo-python
@@ -63,6 +86,26 @@ msgid "<span>% on the</span>"
 msgstr ""
 
 #. module: sales_pricelist_advanced
+#: model:ir.module.module,shortdesc:base.module_sales_pricelist_advanced
+msgid "Advanced Sales Pricelist (UoM & Packaging Pricing)"
+msgstr ""
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "All categories"
+msgstr ""
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "All products"
+msgstr ""
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "All variants"
+msgstr ""
+
+#. module: sales_pricelist_advanced
 #: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__asp_allowed_uom_ids
 msgid "Allowed Units"
 msgstr ""
@@ -105,7 +148,7 @@ msgstr ""
 
 #. module: sales_pricelist_advanced
 #: model:ir.model,name:sales_pricelist_advanced.model_res_company
-msgid "Companies"
+msgid "Company"
 msgstr ""
 
 #. module: sales_pricelist_advanced
@@ -200,7 +243,7 @@ msgstr ""
 #. module: sales_pricelist_advanced
 #. odoo-python
 #: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
-msgid "Pricelist rules - All rule types (discounts, formulas)"
+msgid "Pricelist rules - All rule types (discounts, surcharges)"
 msgstr ""
 
 #. module: sales_pricelist_advanced
@@ -210,9 +253,17 @@ msgid "Pricelist rules - Fixed prices (product, unit, packaging)"
 msgstr ""
 
 #. module: sales_pricelist_advanced
+#: model:ir.module.module,summary:base.module_sales_pricelist_advanced
+msgid ""
+"Pricelist rules per unit and per packaging (Carton, Pack of 6, Dozen), "
+"percentage extra fees, Excel bulk import and quantity conversion on sales "
+"orders."
+msgstr ""
+
+#. module: sales_pricelist_advanced
 #. odoo-python
 #: code:addons/sales_pricelist_advanced/models/product_pricelist.py:0
-msgid "Pricelists with rules - All rule types (discounts, formulas)"
+msgid "Pricelists with rules - All rule types (discounts, surcharges)"
 msgstr ""
 
 #. module: sales_pricelist_advanced
@@ -253,7 +304,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:sales_pricelist_advanced.asp_pricelist_item_action
 msgid ""
 "Review and edit the rules of all your pricelists in one place, or load them in bulk\n"
-"                with the Excel templates available in the gear menu (⚙) &gt; Import records."
+"                with the Excel templates available in the action menu (⋮) &gt; Import."
 msgstr ""
 
 #. module: sales_pricelist_advanced

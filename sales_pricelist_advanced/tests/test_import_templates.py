@@ -8,6 +8,7 @@ from openpyxl import Workbook
 
 from odoo import Command, fields
 from odoo.tests import tagged
+from odoo.tools import BinaryBytes
 from odoo.tools import file_open
 
 from .common import AspCommon
@@ -71,7 +72,7 @@ class TestImportTemplates(AspCommon):
 
     def _import(self, model, content, filename='import.xlsx', lang=None):
         importer = self.env['base_import.import'].with_context(lang=lang).create({
-            'res_model': model, 'file': content, 'file_name': filename, 'file_type': XLSX,
+            'res_model': model, 'file': BinaryBytes(content), 'file_name': filename, 'file_type': XLSX,
         })
         options = {'has_headers': True, 'quoting': '"', 'separator': ',', 'limit': 2000,
                    'float_thousand_separator': ',', 'float_decimal_separator': '.', 'advanced': True}
@@ -143,7 +144,7 @@ class TestImportTemplates(AspCommon):
         rules = self.env['product.pricelist.item'].browse(ids)
         self.assertEqual(rules.pricelist_id, self.wholesale | self.distributor)
         self.assertEqual(set(rules.mapped('applied_on')), {'3_global', '2_product_category', '1_product', '0_product_variant'})
-        self.assertEqual(set(rules.mapped('compute_price')), {'fixed', 'percentage', 'formula'})
+        self.assertEqual(set(rules.mapped('compute_price')), {'fixed', 'discount', 'markup'})
         self.assertEqual(set(rules.mapped('base')), {'list_price', 'standard_price', 'pricelist'})
         self.assertEqual(set(rules.mapped('price_surcharge_percent_base')), {'base', 'discounted'})
 
@@ -227,7 +228,7 @@ class TestImportTemplates(AspCommon):
     def _run(self, rows):
         content = self._xlsx(rows)
         importer = self.env['base_import.import'].create({
-            'res_model': 'product.pricelist.item', 'file': content, 'file_name': 'x.xlsx', 'file_type': XLSX})
+            'res_model': 'product.pricelist.item', 'file': BinaryBytes(content), 'file_name': 'x.xlsx', 'file_type': XLSX})
         return importer.execute_import(rows[0], rows[0], {'has_headers': True, 'quoting': '"', 'separator': ','})
 
     def test_import_incompatible_unit_is_rejected(self):
@@ -242,8 +243,8 @@ class TestImportTemplates(AspCommon):
 
     def test_import_unit_on_category_rule(self):
         ids = self._assert_ok(self._run([
-            ['pricelist_id', 'applied_on', 'categ_id', 'uom_id', 'compute_price', 'percent_price'],
-            ['Retail', 'Product Category', 'Goods', 'Carton of 24', 'Discount', 5],
+            ['pricelist_id', 'categ_id', 'uom_id', 'compute_price', 'price_discount'],
+            ['Retail', 'Goods', 'Carton of 24', 'Discount', 5],
         ]))
         rule = self.env['product.pricelist.item'].browse(ids)
         self.assertEqual(rule.uom_id, self.w_carton)
@@ -251,9 +252,9 @@ class TestImportTemplates(AspCommon):
 
     def test_blank_cells_keep_defaults(self):
         ids = self._assert_ok(self._run([
-            ['pricelist_id', 'applied_on', 'product_tmpl_id', 'compute_price', 'base',
+            ['pricelist_id', 'product_tmpl_id', 'compute_price', 'base',
              'price_discount', 'price_surcharge_percent', 'price_surcharge_percent_base', 'price_min_margin'],
-            ['Retail', 'Product', 'WB15', 'Formula', '', 10, 5, '', 0.05],
+            ['Retail', 'WB15', 'Discount', '', 10, 5, '', 0.05],
         ]))
         rule = self.env['product.pricelist.item'].browse(ids)
         self.assertEqual(rule.base, 'list_price')
@@ -268,13 +269,27 @@ class TestImportTemplates(AspCommon):
         self.assertEqual(pricelist.name, 'Renamed')
         self.assertEqual(pricelist.currency_id, self.env.company.currency_id)
 
-    def test_imported_category_rule_opens_as_category(self):
+    def test_scope_deduced_from_columns(self):
+        """Odoo 20 computes the scope (applied_on) from the category / product columns."""
         ids = self._assert_ok(self._import('product.pricelist.item', self._xlsx([
-            ['pricelist_id', 'applied_on', 'categ_id', 'compute_price', 'percent_price'],
-            ['Retail', 'Product Category', 'Goods', 'Discount', 5],
+            ['pricelist_id', 'categ_id', 'product_tmpl_id', 'product_id', 'compute_price', 'price_discount'],
+            ['Retail', 'Goods', '', '', 'Discount', 5],
+            ['Retail', '', 'WB15', '', 'Discount', 6],
+            ['Retail', '', '', 'TSH-RED-L', 'Discount', 7],
+            ['Retail', '', '', '', 'Discount', 8],
         ])))
-        rule = self.env['product.pricelist.item'].browse(ids)
-        self.assertEqual(rule.applied_on, '2_product_category')
-        self.assertEqual(rule.display_applied_on, '2_product_category')
-        rule.applied_on = '3_global'
-        self.assertEqual(rule.display_applied_on, '1_product')
+        rules = self.env['product.pricelist.item'].browse(ids)
+        self.assertEqual(rules.mapped('applied_on'),
+                         ['2_product_category', '1_product', '0_product_variant', '3_global'])
+
+    def test_empty_markup_cell_keeps_discount(self):
+        """Both percentage columns in one file: an empty Surcharge cell must not wipe the discount."""
+        ids = self._assert_ok(self._import('product.pricelist.item', self._xlsx([
+            ['pricelist_id', 'product_tmpl_id', 'compute_price', 'base', 'price_discount', 'price_markup'],
+            ['Retail', 'WB15', 'Discount', '', 10, ''],
+            ['Retail', 'OJ1', 'Surcharge', 'Cost', '', 25],
+        ])))
+        discount, markup = self.env['product.pricelist.item'].browse(ids)
+        self.assertAlmostEqual(discount.price_discount, 10.0)
+        self.assertAlmostEqual(markup.price_markup, 25.0)
+        self.assertAlmostEqual(markup.price_discount, -25.0)

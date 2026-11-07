@@ -4,7 +4,7 @@
     <!--
         Bulk view of all pricelist rules: review, mass-edit, export and import.
         Odoo 18+ has a single pricelist mode: every rule field is available to
-        pricelist users; detailed formula columns are optional (hidden by default).
+        pricelist users; detailed computation columns are optional (hidden by default).
     -->
     <record id="asp_pricelist_item_tree_view_bulk" model="ir.ui.view">
         <field name="name">product.pricelist.item.list.asp.bulk</field>
@@ -16,16 +16,17 @@
                 <field name="currency_id" column_invisible="True"/>
                 <field name="asp_allowed_uom_ids" column_invisible="True"/>
                 <field name="pricelist_id" options="{'no_create': True}"/>
-                <field name="applied_on"/>
-                <field name="categ_id" optional="show"
+                <!-- Odoo 20 computes "Apply On" from the category / product columns -->
+                <field name="applied_on" optional="show"/>
+                <field name="categ_id" optional="show" placeholder="All categories"
                        options="{'no_create': True}"
-                       readonly="applied_on != '2_product_category'" required="applied_on == '2_product_category'"/>
-                <field name="product_tmpl_id" options="{'no_create': True}"
-                       required="applied_on == '1_product'"/>
+                       readonly="product_tmpl_id or product_id"/>
+                <field name="product_tmpl_id" options="{'no_create': True}" placeholder="All products"
+                       readonly="categ_id"/>
                 <field name="product_id" groups="product.group_product_variant" optional="show"
-                       options="{'no_create': True}"
+                       options="{'no_create': True}" placeholder="All variants"
                        domain="[('product_tmpl_id', '=?', product_tmpl_id)]"
-                       required="applied_on == '0_product_variant'"/>
+                       readonly="categ_id"/>
                 <field name="uom_id" groups="uom.group_uom" optional="show"
                        options="{'no_create': True, 'no_open': True}"
                        domain="[('id', 'in', asp_allowed_uom_ids)]"/>
@@ -33,30 +34,30 @@
                 <field name="compute_price"/>
                 <field name="fixed_price" widget="monetary" options="{'field_digits': True}"
                        invisible="compute_price != 'fixed'"/>
-                <field name="percent_price" optional="hide"
-                       invisible="compute_price != 'percentage'"/>
+                <!-- Odoo 20 rule types: Discount (% off the sales price or another pricelist)
+                     and Surcharge (% added on the sales price, the cost or another pricelist) -->
+                <field name="price_discount" optional="show"
+                       invisible="compute_price != 'discount'"/>
+                <field name="price_markup" optional="show"
+                       invisible="compute_price != 'markup'"/>
                 <field name="base" optional="hide"
-                       invisible="compute_price != 'formula'"/>
+                       invisible="compute_price != 'markup'"/>
                 <field name="base_pricelist_id" optional="hide"
                        options="{'no_create': True}"
-                       invisible="compute_price == 'fixed' or (compute_price == 'formula' and base != 'pricelist')"
-                       required="compute_price == 'formula' and base == 'pricelist'"/>
-                <field name="price_discount" optional="hide"
-                       invisible="compute_price != 'formula' or base == 'standard_price'"/>
-                <field name="price_markup" optional="hide"
-                       invisible="compute_price != 'formula' or base != 'standard_price'"/>
+                       invisible="compute_price == 'fixed' or (compute_price == 'markup' and base != 'pricelist')"
+                       required="compute_price == 'markup' and base == 'pricelist'"/>
                 <field name="price_round" optional="hide"
-                       invisible="compute_price != 'formula'"/>
+                       invisible="compute_price == 'fixed'"/>
                 <field name="price_surcharge" optional="hide"
-                       invisible="compute_price != 'formula'"/>
+                       invisible="compute_price == 'fixed'"/>
                 <field name="price_surcharge_percent" optional="hide"
-                       invisible="compute_price != 'formula'"/>
+                       invisible="compute_price == 'fixed'"/>
                 <field name="price_surcharge_percent_base" optional="hide"
-                       invisible="compute_price != 'formula' or price_surcharge_percent == 0"/>
+                       invisible="compute_price == 'fixed' or price_surcharge_percent == 0"/>
                 <field name="price_min_margin" optional="hide"
-                       invisible="compute_price != 'formula'"/>
+                       invisible="compute_price == 'fixed'"/>
                 <field name="price_max_margin" optional="hide"
-                       invisible="compute_price != 'formula'"/>
+                       invisible="compute_price == 'fixed'"/>
                 <field name="price" string="Rule" optional="show"/>
                 <field name="date_start" optional="show"/>
                 <field name="date_end" optional="show"/>
@@ -74,7 +75,7 @@
             <p class="o_view_nocontent_smiling_face">Create a pricelist rule</p>
             <p>
                 Review and edit the rules of all your pricelists in one place, or load them in bulk
-                with the Excel templates available in the gear menu (&#9881;) &gt; Import records.
+                with the Excel templates available in the action menu (&#8942;) &gt; Import.
             </p>
         </field>
     </record>

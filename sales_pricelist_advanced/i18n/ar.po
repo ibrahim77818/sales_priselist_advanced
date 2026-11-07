@@ -1,9 +1,7 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* sales_pricelist_advanced
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0\n"
+"Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-04 16:48+0000\n"
 "PO-Revision-Date: 2026-11-04 16:49+0000\n"
@@ -14,6 +12,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: sales_pricelist_advanced
+#: model:ir.module.module,description:base.module_sales_pricelist_advanced
+msgid ""
+"\n"
+"Advanced Sales Pricelist\n"
+"========================\n"
+"* Target pricelist rules to a specific unit or packaging (in Odoo 20 a\n"
+"  packaging such as \"Carton of 24\" is a unit of the product).\n"
+"* Fixed prices, extra fees, margins and minimum quantities of these rules are\n"
+"  expressed per that unit / per package.\n"
+"* Priority engine: unit / packaging rules > generic rules, within the\n"
+"  standard scope order (variant > product > category > global).\n"
+"* Works with fixed prices, discounts and surcharges, discounts shown on\n"
+"  quotations (Discounts setting), chained and multi-currency pricelists.\n"
+"* Discount and surcharge rules: percentage extra fee (on the base or the discounted price)\n"
+"  in addition to the fixed extra fee (also applied by the Point of Sale).\n"
+"* Excel import templates (fixed prices or all rule types; pricelists with\n"
+"  rules, or rules for existing pricelists) and a \"Pricelist Rules\" bulk-edit screen.\n"
+"* Sales order lines: optional conversion of the quantity when the unit or\n"
+"  packaging changes, rounded up to whole packages.\n"
+"* Full Arabic (ar_001) translation, RTL-safe views.\n"
+msgstr ""
+"\n"
+"قوائم أسعار المبيعات المتقدمة\n"
+"==============================\n"
+"* تخصيص قواعد قوائم الأسعار لوحدة أو تعبئة محددة (في أودو 20 تكون التعبئة\n"
+"  مثل \"كرتونة 24\" وحدة من وحدات المنتج).\n"
+"* يُعبَّر عن الأسعار الثابتة والرسوم الإضافية والهوامش والكميات الدنيا لهذه\n"
+"  القواعد لكل وحدة / لكل عبوة.\n"
+"* محرك أولوية: قواعد الوحدة / التعبئة > القواعد العامة، ضمن ترتيب النطاق\n"
+"  القياسي (المتغير > المنتج > الفئة > الكل).\n"
+"* يعمل مع الأسعار الثابتة والخصومات والزيادات، وعرض الخصومات في عروض الأسعار\n"
+"  (إعداد الخصومات)، وقوائم الأسعار المتسلسلة ومتعددة العملات.\n"
+"* قواعد الخصم والزيادة: رسوم إضافية بالنسبة المئوية (على السعر الأساسي أو\n"
+"  السعر بعد الخصم) إضافةً إلى الرسوم الثابتة (تُطبَّق أيضاً في نقطة البيع).\n"
+"* قوالب استيراد Excel (أسعار ثابتة أو جميع أنواع القواعد؛ قوائم أسعار مع\n"
+"  قواعدها، أو قواعد لقوائم أسعار موجودة) وشاشة \"قواعد قوائم الأسعار\" للتعديل الجماعي.\n"
+"* بنود أوامر البيع: تحويل اختياري للكمية عند تغيير الوحدة أو التعبئة، مع\n"
+"  التقريب إلى عبوات كاملة.\n"
+"* ترجمة عربية كاملة (ar_001) وواجهات متوافقة مع الكتابة من اليمين لليسار.\n"
 
 #. module: sales_pricelist_advanced
 #. odoo-python
@@ -69,6 +108,26 @@ msgid "<span>% on the</span>"
 msgstr "<span>% على</span>"
 
 #. module: sales_pricelist_advanced
+#: model:ir.module.module,shortdesc:base.module_sales_pricelist_advanced
+msgid "Advanced Sales Pricelist (UoM & Packaging Pricing)"
+msgstr "قوائم أسعار المبيعات المتقدمة (التسعير حسب وحدة القياس والتعبئة)"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "All categories"
+msgstr "كل الفئات"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "All products"
+msgstr "كل المنتجات"
+
+#. module: sales_pricelist_advanced
+#: model_terms:ir.ui.view,arch_db:sales_pricelist_advanced.asp_pricelist_item_tree_view_bulk
+msgid "All variants"
+msgstr "كل المتغيرات"
+
+#. module: sales_pricelist_advanced
 #: model:ir.model.fields,field_description:sales_pricelist_advanced.field_product_pricelist_item__asp_allowed_uom_ids
 msgid "Allowed Units"
 msgstr "الوحدات المسموح بها"
@@ -116,8 +175,8 @@ msgstr "يتم احتساب السعر الأساسي والرسوم الإضا�
 
 #. module: sales_pricelist_advanced
 #: model:ir.model,name:sales_pricelist_advanced.model_res_company
-msgid "Companies"
-msgstr "الشركات"
+msgid "Company"
+msgstr "الشركة"
 
 #. module: sales_pricelist_advanced
 #: model:ir.model,name:sales_pricelist_advanced.model_res_config_settings
@@ -217,8 +276,8 @@ msgstr ""
 #. module: sales_pricelist_advanced
 #. odoo-python
 #: code:addons/sales_pricelist_advanced/models/product_pricelist_item.py:0
-msgid "Pricelist rules - All rule types (discounts, formulas)"
-msgstr "قواعد قوائم الأسعار - جميع أنواع القواعد (خصومات، معادلات)"
+msgid "Pricelist rules - All rule types (discounts, surcharges)"
+msgstr "قواعد قوائم الأسعار - جميع أنواع القواعد (خصومات، زيادات)"
 
 #. module: sales_pricelist_advanced
 #. odoo-python
@@ -227,10 +286,20 @@ msgid "Pricelist rules - Fixed prices (product, unit, packaging)"
 msgstr "قواعد قوائم الأسعار - أسعار ثابتة (منتج، وحدة، تعبئة)"
 
 #. module: sales_pricelist_advanced
+#: model:ir.module.module,summary:base.module_sales_pricelist_advanced
+msgid ""
+"Pricelist rules per unit and per packaging (Carton, Pack of 6, Dozen), "
+"percentage extra fees, Excel bulk import and quantity conversion on sales "
+"orders."
+msgstr ""
+"قواعد قوائم أسعار لكل وحدة ولكل تعبئة (كرتونة، عبوة 6، دزينة)، ورسوم إضافية "
+"بالنسبة المئوية، واستيراد جماعي من Excel، وتحويل الكمية في أوامر البيع."
+
+#. module: sales_pricelist_advanced
 #. odoo-python
 #: code:addons/sales_pricelist_advanced/models/product_pricelist.py:0
-msgid "Pricelists with rules - All rule types (discounts, formulas)"
-msgstr "قوائم الأسعار مع القواعد - جميع أنواع القواعد (خصومات، معادلات)"
+msgid "Pricelists with rules - All rule types (discounts, surcharges)"
+msgstr "قوائم الأسعار مع القواعد - جميع أنواع القواعد (خصومات، زيادات)"
 
 #. module: sales_pricelist_advanced
 #. odoo-python
@@ -270,10 +339,10 @@ msgstr "تم تقريب الكمية للأعلى إلى %(qty)s %(uom)s لبي�
 #: model_terms:ir.actions.act_window,help:sales_pricelist_advanced.asp_pricelist_item_action
 msgid ""
 "Review and edit the rules of all your pricelists in one place, or load them in bulk\n"
-"                with the Excel templates available in the gear menu (⚙) &gt; Import records."
+"                with the Excel templates available in the action menu (⋮) &gt; Import."
 msgstr ""
 "راجع وعدّل قواعد جميع قوائم الأسعار في مكان واحد، أو حمّلها دفعة واحدة\n"
-"                باستخدام نماذج Excel المتوفرة في قائمة الترس (⚙) &gt; استيراد السجلات."
+"                باستخدام نماذج Excel المتوفرة في قائمة الإجراءات (⋮) &gt; استيراد."
 
 #. module: sales_pricelist_advanced
 #: model:ir.model.fields,field_description:sales_pricelist_advanced.field_res_company__asp_round_qty_to_packaging

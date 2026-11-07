@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Advanced Sales Pricelist (UoM & Packaging Pricing)',
-    'version': '19.0.1.1.0',
+    'version': '20.0.1.1.0',
     'category': 'Sales/Sales',
     'summary': 'Pricelist rules per unit and per packaging (Carton, Pack of 6, Dozen), '
                'percentage extra fees, Excel bulk import and quantity conversion on sales orders.',
     'description': """
 Advanced Sales Pricelist
 ========================
-* Target pricelist rules to a specific unit or packaging (in Odoo 19 a
+* Target pricelist rules to a specific unit or packaging (in Odoo 20 a
   packaging such as "Carton of 24" is a unit of the product).
 * Fixed prices, extra fees, margins and minimum quantities of these rules are
   expressed per that unit / per package.
 * Priority engine: unit / packaging rules > generic rules, within the
   standard scope order (variant > product > category > global).
-* Works with fixed prices, discounts and formulas, discounts shown on
+* Works with fixed prices, discounts and surcharges, discounts shown on
   quotations (Discounts setting), chained and multi-currency pricelists.
-* Formula rules: percentage extra fee (on the base or the discounted price)
+* Discount and surcharge rules: percentage extra fee (on the base or the discounted price)
   in addition to the fixed extra fee (also applied by the Point of Sale).
 * Excel import templates (fixed prices or all rule types; pricelists with
   rules, or rules for existing pricelists) and a "Pricelist Rules" bulk-edit screen.
